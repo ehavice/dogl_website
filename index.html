@@ -66,7 +66,7 @@
   .about h2{font-size:clamp(54px,7vw,92px);font-weight:800;line-height:.95;margin-bottom:30px}
   .about p{font-size:20px;color:var(--blue);max-width:520px}
   .about .logo-col{position:relative;display:block}
-  .about .logo-col img{width:min(380px,80%);filter:url(#to-blue);display:block}
+  .about .logo-col img{width:100%;filter:url(#to-blue);display:block}
   .about .logo-col .wm{position:absolute;bottom:0;left:0;width:68%;font-family:'Montserrat';font-weight:800;font-size:40px;color:var(--blue);text-align:left;line-height:1.1}
 
   /* ---------- FOUR PANELS ---------- */
@@ -152,7 +152,7 @@
 </head>
 <body>
 
-<svg style="display:none"><defs><filter id="to-blue"><feColorMatrix type="matrix" values="0 0 0 0 0.09 0 0 0 0 0.169 0 0 0 0 0.918 0 0 0 1 0"/></filter></defs></svg>
+<svg style="position:absolute;width:0;height:0;overflow:hidden"><defs><filter id="to-blue"><feColorMatrix type="matrix" values="0 0 0 0 0.09 0 0 0 0 0.169 0 0 0 0 0.918 0 0 0 1 0"/></filter></defs></svg>
 
 <header id="header">
   <div class="nav">
