@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Oceans Governance Lab</title>
+<meta name="description" content="The Digital Oceans Governance Lab (DOGL) explores the role of ocean data science initiatives in global and regional oceans governance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Montserrat: the geometric display face used in the original; Mulish for body -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#172bea;        /* electric cobalt — primary */
+    --blue-dk:#1224c4;
+    --navy:#172867;        /* logo navy / Digital panel */
+    --teal:#37b3ad;        /* Lab panel */
+    --grey:#eceef0;        /* Governance panel */
+    --ink:#172867;
+    --blue-text:#172bea;
+    --muted:#4a5781;
+    --line:#dfe3ee;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Mulish',sans-serif;color:var(--ink);line-height:1.62;background:#fff;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4,h5{font-family:'Montserrat',sans-serif;font-weight:700;line-height:1.05;color:var(--blue);letter-spacing:-.01em}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+  section{padding:96px 0}
+
+  /* ---------- HEADER ---------- */
+  header{position:fixed;top:0;left:0;right:0;z-index:80;transition:background .3s,box-shadow .3s}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:86px;padding:0 46px}
+  .wordmark{font-family:'Montserrat';font-weight:400;font-size:23px;letter-spacing:.01em;color:#fff;transition:color .3s}
+  nav ul{list-style:none;display:flex;gap:38px}
+  nav a{font-family:'Montserrat';font-weight:400;font-size:15px;letter-spacing:.02em;color:#fff;padding-bottom:5px;border-bottom:2px solid transparent;transition:color .3s}
+  nav a:hover,nav a.on{border-bottom-color:currentColor;text-decoration:none}
+  /* scrolled state: white bar, blue text */
+  header.scrolled{background:#fff;box-shadow:0 2px 18px rgba(23,40,103,.08)}
+  header.scrolled .wordmark{color:var(--blue)}
+  header.scrolled nav a{color:var(--navy)}
+  .menu-btn{display:none;background:none;border:0;font-size:26px;color:#fff;cursor:pointer}
+  header.scrolled .menu-btn{color:var(--navy)}
+
+  /* ---------- DOT NAV (right rail) ---------- */
+  .dots{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:70;display:flex;flex-direction:column;gap:18px}
+  .dots a{width:11px;height:11px;border-radius:50%;border:1.5px solid rgba(23,40,103,.45);background:transparent;transition:all .25s;display:block}
+  .dots a:hover{border-color:var(--blue)}
+  .dots a.active{background:var(--blue);border-color:var(--blue)}
+  .hero-active .dots a{border-color:rgba(255,255,255,.6)}
+  .hero-active .dots a.active{background:#fff;border-color:#fff}
+  @media(max-width:1100px){.dots{display:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;
+    background:#172bea url('img/contour.jpg') left center/cover no-repeat;overflow:hidden}
+  .hero .logo-big{position:absolute;right:6%;top:50%;transform:translateY(-50%);width:min(640px,46vw);opacity:.97}
+  .hero .scrolltip{position:absolute;left:46px;bottom:40px;color:rgba(255,255,255,.85);font-family:'Montserrat';font-size:13px;letter-spacing:.22em;text-transform:uppercase}
+
+  /* ---------- ABOUT ---------- */
+  .about{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
+  .about h2{font-size:clamp(54px,7vw,92px);font-weight:800;line-height:.95;margin-bottom:30px}
+  .about p{font-size:20px;color:var(--blue);max-width:520px}
+  .about .logo-col{display:flex;flex-direction:column;align-items:center;gap:22px}
+  .about .logo-col img{width:min(380px,80%)}
+  .about .logo-col .wm{font-family:'Montserrat';font-weight:700;font-size:30px;color:var(--blue);text-align:center;line-height:1.1}
+
+  /* ---------- FOUR PANELS ---------- */
+  .panels{display:grid;grid-template-columns:repeat(4,1fr)}
+  .panel{padding:74px 42px 84px;min-height:560px;display:flex;flex-direction:column}
+  .panel svg{width:74px;height:74px;margin-bottom:40px;stroke-width:5}
+  .panel h3{font-size:34px;font-weight:700;margin-bottom:22px;letter-spacing:0}
+  .panel p{font-size:16.5px;line-height:1.6}
+  .panel.digital{background:var(--navy);color:#fff}.panel.digital h3{color:#fff}.panel.digital svg{stroke:#fff}.panel.digital p{color:#cfd6ee}
+  .panel.oceans{background:var(--blue);color:#fff}.panel.oceans h3{color:#fff}.panel.oceans svg{stroke:#fff}.panel.oceans p{color:#dfe3ff}
+  .panel.governance{background:var(--grey);color:var(--navy)}.panel.governance h3{color:var(--navy)}.panel.governance svg{stroke:var(--navy)}.panel.governance p{color:var(--blue)}
+  .panel.lab{background:var(--teal);color:#fff}.panel.lab h3{color:#fff}.panel.lab svg{stroke:#fff}.panel.lab p{color:#eafbfa}
+
+  /* ---------- IMAGE BANDS (ODSI) ---------- */
+  .eyebrow{font-family:'Montserrat';text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:600;color:var(--teal);margin-bottom:18px}
+  .band{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .band.rev .txt{order:2}
+  .band img{border-radius:8px;width:100%;object-fit:cover;max-height:380px}
+  .band h3{font-size:36px;font-weight:700;margin-bottom:18px}
+  .band p{font-size:17.5px;color:var(--muted);margin-bottom:16px}
+  .band ol{margin:0 0 0 20px;color:var(--muted);font-size:16.5px}
+  .band ol li{margin-bottom:9px}
+
+  /* ---------- TEAM ---------- */
+  .section-head h2{font-size:clamp(40px,5vw,64px);font-weight:800;margin-bottom:14px}
+  .section-head p{font-size:18px;color:var(--muted);max-width:780px}
+  .subhead{font-family:'Montserrat';font-size:14px;text-transform:uppercase;letter-spacing:.18em;color:var(--navy);font-weight:700;margin:52px 0 26px;padding-bottom:12px;border-bottom:2px solid var(--line)}
+  .people{display:grid;grid-template-columns:repeat(2,1fr);gap:40px}
+  .person{display:flex;gap:22px}
+  .person img{width:118px;height:118px;border-radius:50%;object-fit:cover;flex:0 0 118px;background:var(--grey)}
+  .person h4{font-family:'Montserrat';font-size:19px;font-weight:700;color:var(--navy);margin-bottom:3px}
+  .person .role{font-size:13px;color:var(--blue);font-weight:700;margin-bottom:9px;font-family:'Mulish'}
+  .person p{font-size:14.5px;color:var(--muted)}
+
+  /* ---------- WORK ---------- */
+  .work{background:var(--grey)}
+  .proj{margin-bottom:42px}
+  .proj h3{font-size:26px;font-weight:700;margin-bottom:12px;color:var(--navy)}
+  .proj p{color:var(--muted);margin-bottom:16px;font-size:16.5px}
+  .figure{margin:18px 0;border-radius:8px;overflow:hidden;background:#fff}
+  .figure img{width:100%}
+  .figure figcaption{font-size:13.5px;color:var(--muted);padding:12px 16px;background:#fff}
+  .refs{list-style:none;border-left:3px solid var(--blue);padding-left:20px}
+  .refs li{font-size:14.5px;color:var(--ink);margin-bottom:13px}
+
+  /* ---------- FUNDING ---------- */
+  .funding{text-align:center}
+  .funders{display:flex;gap:56px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:36px}
+  .funders img{height:96px;width:auto}
+
+  /* ---------- CONTACT ---------- */
+  .contact{background:var(--blue);color:#fff;position:relative;overflow:hidden}
+  .contact::after{content:"";position:absolute;right:-200px;top:-200px;width:760px;height:760px;border-radius:50%;
+    border:60px solid rgba(255,255,255,.06);box-shadow:0 0 0 60px rgba(255,255,255,.04)}
+  .contact .wrap{position:relative;max-width:680px}
+  .contact h2{color:#fff;font-size:clamp(40px,5vw,60px);font-weight:800;margin-bottom:12px}
+  .contact p{color:#dfe3ff;margin-bottom:28px;font-size:18px}
+  form{display:grid;gap:16px}
+  form input,form textarea{width:100%;padding:15px 18px;border:1.5px solid rgba(255,255,255,.4);border-radius:6px;background:rgba(255,255,255,.1);color:#fff;font:16px 'Mulish'}
+  form ::placeholder{color:#c5ccf5}
+  form button{justify-self:start;background:#fff;color:var(--blue);border:0;padding:15px 44px;border-radius:6px;font-weight:700;font-size:16px;cursor:pointer;font-family:'Montserrat'}
+  form button:hover{background:var(--teal);color:#fff}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--navy);color:#bcc6e6;padding:64px 0 34px}
+  .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:34px;align-items:start}
+  footer .flogo{height:54px;filter:brightness(0) invert(1);margin-bottom:16px}
+  footer h5{color:#fff;font-family:'Montserrat';font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:16px}
+  footer ul{list-style:none}footer li{margin-bottom:9px}
+  footer a{color:#bcc6e6;font-size:14.5px}footer a:hover{color:#fff}
+  .copyright{margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);font-size:13px;color:#8d99c4}
+
+  @media(max-width:880px){
+    nav ul{display:none}.menu-btn{display:block}
+    .about,.band,.people,.foot{grid-template-columns:1fr}
+    .about h2{margin-bottom:18px}.band.rev .txt{order:0}
+    .panels{grid-template-columns:repeat(2,1fr)}
+    .hero .logo-big{width:70vw;right:50%;transform:translate(50%,-50%);opacity:.5}
+    section{padding:64px 0}
+  }
+  @media(max-width:520px){.panels{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <div class="nav">
+    <a class="wordmark" href="#top">Digital Oceans Governance Lab</a>
+    <nav><ul>
+      <li><a href="#top" class="on">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#team">Our Team</a></li>
+      <li><a href="#work">Our Work</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul></nav>
+    <button class="menu-btn" aria-label="menu">&#9776;</button>
+  </div>
+</header>
+
+<!-- right-rail dot nav -->
+<div class="dots">
+  <a href="#top" data-s="top" class="active" aria-label="Home"></a>
+  <a href="#about" data-s="about" aria-label="About"></a>
+  <a href="#odsi" data-s="odsi" aria-label="ODSIs"></a>
+  <a href="#team" data-s="team" aria-label="Team"></a>
+  <a href="#work" data-s="work" aria-label="Work"></a>
+  <a href="#funding" data-s="funding" aria-label="Funding"></a>
+  <a href="#contact" data-s="contact" aria-label="Contact"></a>
+</div>
+
+<a id="top"></a>
+<section class="hero">
+  <img class="logo-big" src="img/logo.png" alt="DOGL">
+  <div class="scrolltip">Scroll &darr;</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap about">
+    <div>
+      <h2>About<br>DOGL</h2>
+      <p>The Digital Oceans Governance Lab (DOGL) is situated at the intersection of two trends influencing the future of global oceans: a proliferation of &lsquo;oceans data science initiatives&rsquo; (ODSIs) and increasing interest in expanded oceans policy and governance.</p>
+    </div>
+    <div class="logo-col">
+      <img src="img/logo.png" alt="DOGL logo">
+      <div class="wm">Digital Oceans<br>Governance Lab</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUR PANELS -->
+<div class="panels">
+  <div class="panel digital">
+    <svg viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M32 58V30"/><path d="M32 44L18 34V20"/><path d="M32 38l14-10V16"/><circle cx="18" cy="14" r="5"/><circle cx="46" cy="10" r="5"/><circle cx="32" cy="24" r="5"/></svg>
+    <h3>Digital</h3>
+    <p>Digital information about ocean environments is proliferating &mdash; high-resolution satellite imagery, sensing platforms above and below water, electronic tags on marine animals, autonomous vehicles and drones. Advances in computing power produce powerful visualizations, data portals and products, often spatial and in real time.</p>
+  </div>
+  <div class="panel oceans">
+    <svg viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24c6-7 12-7 18 0s12 7 18 0 12-7 16 0"/><path d="M6 38c6-7 12-7 18 0s12 7 18 0 12-7 16 0"/><path d="M6 52c6-7 12-7 18 0s12 7 18 0 12-7 16 0"/></svg>
+    <h3>Oceans</h3>
+    <p>Oceans are vast, multi-dimensional, and fluid &mdash; characteristics that historically have constrained human efforts to know and use them. Yet oceans are critical to environmental and social wellbeing, rich with biodiversity, and support livelihoods for people around the world.</p>
+  </div>
+  <div class="panel governance">
+    <svg viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="12" r="6"/><circle cx="14" cy="52" r="6"/><circle cx="32" cy="52" r="6"/><circle cx="50" cy="52" r="6"/><path d="M32 18v14M32 32H14v14M32 32h18v14M32 32v14"/></svg>
+    <h3>Governance</h3>
+    <p>Governance implications of renewed interest in oceans and new scientific understanding are converging. State and non-state actors mobilize new data technologies and ODSIs to expand human reach into the oceans. New governance frames &mdash; such as &lsquo;blue economy&rsquo; and &lsquo;blue justice&rsquo; &mdash; are also emerging.</p>
+  </div>
+  <div class="panel lab">
+    <svg viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="28" r="18"/><path d="M41 41l13 13"/><circle cx="22" cy="26" r="3.2"/><circle cx="34" cy="22" r="3.2"/><circle cx="32" cy="34" r="3.2"/><path d="M24.5 25l7-2M33 25l-1 6M30 33l-6-5"/></svg>
+    <h3>Lab</h3>
+    <p>Labs are places of research and experimentation. Our lab brings together an interdisciplinary team of human geographers, marine ecologists, geospatial data scientists and information scientists to explore the role of ODSIs in global and regional oceans governance &mdash; toward more just and sustainable ocean futures.</p>
+  </div>
+</div>
+
+<!-- WHAT IS AN ODSI -->
+<section id="odsi">
+  <div class="wrap band">
+    <div class="txt">
+      <p class="eyebrow">Ocean Data Science Initiatives</p>
+      <h3>What is an ODSI?</h3>
+      <p>Ocean data science initiatives (ODSIs) are led by scientists, non-government organizations, businesses, state or inter-state agencies &mdash; often in collaboration. They mobilize new data technologies to produce new knowledge and understandings of the oceans, with the express goal of informing or improving conditions in the oceans.</p>
+      <p>An ODSI may be active at any stage of the data &lsquo;lifecycle&rsquo; &mdash; collection or generation; building platforms and infrastructures for storing, managing and distributing data; advancing analytical tools to &lsquo;make sense&rsquo; of data; or serving as hubs that catalyze data networks.</p>
+    </div>
+    <img src="img/pointcloud.png" alt="Point-cloud visualization of ocean data">
+  </div>
+</section>
+
+<section style="background:var(--grey)">
+  <div class="wrap band rev">
+    <div class="txt">
+      <p class="eyebrow">The building blocks</p>
+      <h3>New data technologies</h3>
+      <p>The term <em>new data technologies</em> captures the many innovations that underlie ODSIs. Much has been written about &lsquo;Big Data&rsquo;, but that term directs attention to data alone and risks masking the steps and skills required to collect, analyse, interpret and visualize it. New data technologies include data, but also:</p>
+      <ol>
+        <li>data collection platforms and devices &mdash; satellite remote sensing, sensor networks, autonomous underwater vehicles and aerial drones;</li>
+        <li>computing hardware, software and applications for analysis, modelling, visualization and storage;</li>
+        <li>cloud-based computing and data storage;</li>
+        <li>websites, dashboards, data portals and other digital platforms for sharing, analysis and visualization.</li>
+      </ol>
+    </div>
+    <img src="img/contour.jpg" alt="Bathymetric contour pattern">
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Our Team</p>
+      <h2>An interdisciplinary team</h2>
+      <p>The Digital Oceans Governance Lab is co-led by Elizabeth Havice (UNC&ndash;Chapel Hill) and Lisa Campbell (Duke University), bringing together human geographers, marine ecologists, geospatial data scientists and information scientists.</p>
+    </div>
+
+    <h3 class="subhead">Lab Co-Leads</h3>
+    <div class="people">
+      <div class="person"><img src="img/havice.jpg" alt="Elizabeth Havice"><div><h4>Dr. Elizabeth Havice</h4><div class="role">Co-Lead &middot; Professor of Geography, UNC&ndash;Chapel Hill</div><p>Uses the lens of governance to explore distributional outcomes in marine resource sectors, food systems and global value chains, with 15+ years researching the global tuna industry and oceans governance, and advisory roles for Pacific Island governments.</p></div></div>
+      <div class="person"><img src="img/campbell.jpg" alt="Lisa Campbell"><div><h4>Dr. Lisa Campbell</h4><div class="role">Co-Lead &middot; Rachel Carson Professor, Duke University</div><p>Studies oceans governance across scales (international, national, local) and issues (protected species, fisheries, MPAs, tourism), with particular interest in how science and non-state actors inform governance outcomes. Based at the Duke Marine Lab.</p></div></div>
+    </div>
+
+    <h3 class="subhead">Team</h3>
+    <div class="people">
+      <div class="person"><img src="img/boustany.jpg" alt="Andre Boustany"><div><h4>Dr. Andre Boustany</h4><div class="role">Monterey Bay Aquarium</div><p>Marine biologist advising on Atlantic and Pacific bluefin tuna stock assessment at ICCAT and IATTC, and on the US delegation&rsquo;s ICCAT Advisory Committee.</p></div></div>
+      <div class="person"><img src="img/halpin.jpg" alt="Pat Halpin"><div><h4>Dr. Pat Halpin</h4><div class="role">Professor, Duke University</div><p>Directs the Geospatial Analysis Program and Marine Geospatial Ecology Lab; advises OBIS, GOBI, GEO-BON and the UN Decade of Ocean Science.</p></div></div>
+      <div class="person"><img src="img/melvin.jpg" alt="Emily Melvin"><div><h4>Emily Melvin</h4><div class="role">PhD Student, Duke University</div><p>Researches the blue economy as a post-disaster recovery strategy in Grand Bahama after Hurricane Dorian, and its implications for ocean conservation and governance.</p></div></div>
+      <div class="person"><img src="img/carmine.jpg" alt="Gabrielle Carmine"><div><h4>Gabrielle Carmine</h4><div class="role">PhD Student, Duke University</div><p>Studies high seas fisheries, corporate power and RFMOs using Global Fishing Watch data to calculate fishing effort for corporate actors.</p></div></div>
+      <div class="person"><img src="img/zurita.jpg" alt="Ana Zurita Posas"><div><h4>Ana Zurita Posas</h4><div class="role">REU Fellow, UNC</div><p>Pre-Environmental Health Sciences and Geography double major contributing to the ODSI catalog, with plans to study environmental health disparities in rural North Carolina.</p></div></div>
+      <div class="person"><img src="img/kingery.jpg" alt="Zach Kingery"><div><h4>Zach Kingery</h4><div class="role">Undergraduate Researcher, UNC</div><p>Maps declared relations between ODSIs to understand world-making patterns along lines of funding and partnership.</p></div></div>
+    </div>
+
+    <h3 class="subhead">DOGL Alumni</h3>
+    <div class="people">
+      <div class="person"><img src="img/drakopulos.jpg" alt="Lauren Drakopulos"><div><h4>Dr. Lauren Drakopulos</h4><div class="role">Former Postdoctoral Fellow</div><p>Worked on science, digital technologies and data infrastructure in environmental governance; now at Sandia National Laboratories.</p></div></div>
+      <div class="person"><img src="img/crisp.jpg" alt="Katie Crisp"><div><h4>Katie Crisp</h4><div class="role">Former REU Fellow</div><p>Worked on the ODSI catalog; now a paralegal at the Southern Coalition for Social Justice.</p></div></div>
+      <div class="person"><img src="img/barkley.jpg" alt="Carden Barkley"><div><h4>Carden Barkley</h4><div class="role">Former MEM Student, Duke</div><p>Now a John A. Knauss Marine Policy Fellow at the NOAA Fisheries Office of the Assistant Administrator.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work" class="work">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Our Work</p>
+      <h2>Research projects &amp; products</h2>
+    </div>
+    <div style="margin-top:40px"></div>
+
+    <div class="proj">
+      <h3>Tracking tuna and turtles</h3>
+      <p>We have explored the role of new data technologies in managing two iconic marine species &mdash; Atlantic bluefin tuna and marine turtles &mdash; examining the policy implications of relying on these products to &lsquo;resolve&rsquo; scalar mismatches in oceans management.</p>
+      <figure class="figure">
+        <img src="img/havice-allcatch.jpg" alt="Atlantic bluefin tuna catch by location">
+        <figcaption>Atlantic bluefin tuna catch (metric tons) by location &mdash; a product of new data technologies used in stock management.</figcaption>
+      </figure>
+      <ul class="refs">
+        <li>Havice, E., L.M. Campbell &amp; A.M. Boustany. 2022. &lsquo;New data technologies and the politics of scale in environmental management&rsquo;, <em>Annals of the American Association of Geographers</em>.</li>
+        <li>Havice, E., L.M. Campbell &amp; A. Braun. 2018. Science, scale and the frontier of governing mobile marine species. <em>International Social Science Journal</em> 68 (229-230):273-89.</li>
+      </ul>
+    </div>
+
+    <div class="proj">
+      <h3>Catalog of ODSIs</h3>
+      <p>To understand the world of ODSIs, we assembled an open-access catalog of oceans data science initiatives related to fisheries extraction, biodiversity conservation, and enhancing basic scientific knowledge. We identified more than 150 ODSIs and coded key features: (1) data infrastructure, (2) organizational structure, (3) the ocean worlds they create, and (4) the policy and governance &lsquo;solutions&rsquo; they promote.</p>
+      <ul class="refs">
+        <li>Drakopulos, L., E. Havice &amp; L.M. Campbell. 2022. &lsquo;Architecture, agency and ocean data science initiatives&rsquo;, <em>Earth System Governance</em>.</li>
+        <li>Drakopulos, L., Havice, E., Crisp, K., Zurita Posas, A. 2022. <em>Catalog of Ocean Data Science Initiatives</em>. Qualitative Data Repository. <a href="https://doi.org/10.5064/F6ZQWQJS">https://doi.org/10.5064/F6ZQWQJS</a></li>
+        <li>Analysis and cleaning code: <a href="https://github.com/ehavice/DOGL">github.com/ehavice/DOGL</a></li>
+      </ul>
+    </div>
+
+    <div class="proj">
+      <h3>ODSI case studies</h3>
+      <p>Based on the catalog, we are exploring case studies to better understand the role of ODSIs as governance actors.</p>
+      <ul class="refs">
+        <li>Havice, E. &amp; L.M. Campbell. 2023. &lsquo;(How) will new data technologies support oceans governance?&rsquo; <em>Environment and Planning D: Society and Space</em> Magazine. In <em>Contesting the Ocean Decade.</em></li>
+        <li>Watch Emily Melvin present &lsquo;Analyzing Ocean Maps&rsquo;, an overview of our visual analysis of ODSI spatial data representations.</li>
+      </ul>
+    </div>
+
+    <div class="proj">
+      <h3>ODSI learning modules</h3>
+      <p>In the future, DOGL will provide learning modules to facilitate interdisciplinary experimentation with the potentials ODSIs present for more sustainable ocean futures &mdash; articulating the visions and theories of change that inform the use of new data technologies, and experimenting with data synthesis toward sustainability, well-being, justice and equity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FUNDING -->
+<section id="funding" class="funding">
+  <div class="wrap">
+    <p class="eyebrow">Funding</p>
+    <h2 style="font-size:clamp(34px,4vw,52px);font-weight:800">Our work is supported by</h2>
+    <p style="font-size:18px;color:var(--muted);max-width:760px;margin:16px auto 0">Our work has been supported by the National Science Foundation Human-Environment and Geographical Sciences Program and the National Geographic Conservation Trust.</p>
+    <div class="funders"><img src="img/nsf.png" alt="National Science Foundation"><img src="img/natgeo.png" alt="National Geographic"></div>
+  </div>
+</section>
+
+<!-- OTHER WORK -->
+<section style="background:var(--grey);padding-top:0">
+  <div class="wrap">
+    <h2 style="font-size:clamp(30px,3.6vw,44px);font-weight:800;padding-top:0">Other relevant work products</h2>
+    <ul class="refs" style="margin-top:28px;border-left-color:var(--navy)">
+      <li>Acton, L., L.M. Campbell, J. Cleary, N.J. Gray &amp; P. Halpin. 2019. What is the Sargasso Sea? The problem of fixing space in a fluid ocean. <em>Political Geography</em> 68:86-100.</li>
+      <li>Boucquey, N., K. St. Martin, L. Fairbanks, L.M. Campbell &amp; S. Wise. 2019. Ocean data portals: Performing a new infrastructure for ocean governance. <em>Environment and Planning D</em> 37(3):484-503.</li>
+      <li>Campbell, L.M. 2007. Local conservation practice and global discourse: A political ecology of sea turtle conservation. <em>Annals of the AAG</em> 97(2):313-34.</li>
+      <li>Campbell, L.M. &amp; M.H. Godfrey. 2010. Geopolitical genetics: Claiming the commons through species mapping. <em>Geoforum</em> 41(6):897-907.</li>
+      <li>Campbell, L.M., K. St. Martin, L. Fairbanks, N. Boucquey &amp; S. Wise. 2020. The portal is the plan: Governing US oceans in regional assemblages. <em>Maritime Studies</em> 19(3):285-97.</li>
+      <li>Campbell, L.M., N.J. Gray, S.B.J. Zigler, L. Acton &amp; R. Gruby. 2021. World-making through mapping: Large scale marine protected areas and the transformation of the global ocean. In <em>The Routledge Handbook of Critical Resource Geography.</em></li>
+      <li>Campbell, L.M. et al. 2016. Global oceans governance: New and emerging issues. <em>Annual Review of Environment and Resources</em> 41(1):517-43.</li>
+      <li>Fairbanks, L., L.M. Campbell, N. Boucquey &amp; K. St. Martin. 2018. Assembling enclosure: Reading marine spatial planning for alternatives. <em>Annals of the AAG</em> 108(1):144-61.</li>
+      <li>Fairbanks, L., N. Boucquey, L.M. Campbell &amp; S. Wise. 2019. Remaking oceans governance: Critical perspectives on marine spatial planning. <em>Environment and Society</em> 10(1):122-40.</li>
+      <li>Fawcett, L., E. Havice &amp; A. Zalik. Forthcoming. Privatize, democratize, decolonize: Frontiers of ocean knowledges in the 21st century. In <em>The Handbook to Ocean Space.</em></li>
+      <li>Havice, E., L.M. Campbell, L. Campling &amp; M.D. Smith. 2021. Commentary: Making sense of firms for ocean governance. <em>One Earth</em> 4(5):602-4.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap">
+    <h2>Contact Us</h2>
+    <p>Please type your message and email address to contact us.</p>
+    <form action="https://formspree.io/f/your-form-id" method="POST">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" rows="5" placeholder="Your message" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div><img class="flogo" src="img/logo.png" alt="DOGL"><p style="font-size:15px;color:#fff;font-family:'Montserrat';font-weight:500">Digital Oceans Governance Lab</p></div>
+    <div><h5>Links</h5><ul><li><a href="#top">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#team">Our Team</a></li><li><a href="#work">Our Work</a></li><li><a href="#contact">Contact Us</a></li></ul></div>
+    <div><h5>Social &amp; Data</h5><ul><li><a href="https://twitter.com/DOGL_Oceans">Twitter / X &middot; @DOGL_Oceans</a></li><li><a href="https://doi.org/10.5064/F6ZQWQJS">ODSI Catalog (QDR)</a></li><li><a href="https://github.com/ehavice/DOGL">Code (GitHub)</a></li></ul></div>
+  </div>
+  <div class="wrap"><p class="copyright">&copy; 2022 Digital Oceans Governance Lab.</p></div>
+</footer>
+
+<script>
+  var header=document.getElementById('header'), body=document.body;
+  var sections=[...document.querySelectorAll('.dots a')].map(function(a){return {a:a,el:document.querySelector('#'+a.dataset.s)};});
+  function onScroll(){
+    var y=window.scrollY;
+    var heroH=document.querySelector('.hero').offsetHeight;
+    header.classList.toggle('scrolled', y>heroH-90);
+    body.classList.toggle('hero-active', y<heroH-120);
+    // active dot
+    var cur=sections[0];
+    sections.forEach(function(s){ if(s.el && s.el.getBoundingClientRect().top<=window.innerHeight*0.4) cur=s; });
+    sections.forEach(function(s){ s.a.classList.toggle('active', s===cur); });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  document.querySelector('.menu-btn').addEventListener('click',function(){
+    var n=document.querySelector('nav ul');
+    var open=n.style.display==='flex';
+    n.style.cssText=open?'':'display:flex;position:absolute;flex-direction:column;background:#fff;top:86px;right:0;padding:22px 30px;gap:16px;box-shadow:0 8px 24px rgba(0,0,0,.12)';
+    if(!open){header.classList.add('scrolled');}
+  });
+</script>
+</body>
+</html>
