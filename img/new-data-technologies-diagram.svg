@@ -1,6 +1,5 @@
 <svg viewBox="0 0 700 460" xmlns="http://www.w3.org/2000/svg">
   <rect width="700" height="460" fill="#172867"/>
-  <circle cx="672" cy="24" r="5" fill="#37b3ad"/>
 
   <!-- connector lines -->
   <g stroke="#37b3ad" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round">
