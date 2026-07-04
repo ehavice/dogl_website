@@ -1,0 +1,44 @@
+<svg viewBox="0 0 700 460" xmlns="http://www.w3.org/2000/svg">
+  <rect width="700" height="460" fill="#172867"/>
+  <circle cx="672" cy="24" r="5" fill="#37b3ad"/>
+
+  <!-- connector lines -->
+  <g stroke="#37b3ad" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round">
+    <line x1="350" y1="185" x2="350" y2="98"/>
+    <line x1="405" y1="245" x2="486" y2="228"/>
+    <line x1="378" y1="278" x2="430" y2="333"/>
+    <line x1="322" y1="278" x2="270" y2="333"/>
+    <line x1="295" y1="245" x2="214" y2="228"/>
+  </g>
+
+  <!-- center hub -->
+  <circle cx="350" cy="230" r="72" fill="none" stroke="#e7eaf5" stroke-width="1.5"/>
+  <text x="350" y="222" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="17" letter-spacing="0.5">NEW DATA</text>
+  <text x="350" y="244" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="17" letter-spacing="0.5">TECHNOLOGIES</text>
+
+  <!-- DATA (top) -->
+  <rect x="300" y="28" width="100" height="70" rx="4" fill="none" stroke="#e7eaf5" stroke-width="1.5"/>
+  <text x="350" y="68" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="14" letter-spacing="0.5">DATA</text>
+
+  <!-- DATA COLLECTION PLATFORM, DEVICES (right) -->
+  <rect x="486" y="163" width="185" height="70" rx="4" fill="none" stroke="#e7eaf5" stroke-width="1.5"/>
+  <text x="578" y="192" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" letter-spacing="0.3">DATA COLLECTION</text>
+  <text x="578" y="211" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" letter-spacing="0.3">PLATFORM, DEVICES</text>
+
+  <!-- CLOUD BASED COMPUTING AND STORAGE (bottom right) -->
+  <rect x="405" y="333" width="205" height="90" rx="4" fill="none" stroke="#e7eaf5" stroke-width="1.5"/>
+  <text x="507" y="371" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" letter-spacing="0.3">CLOUD BASED</text>
+  <text x="507" y="390" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" letter-spacing="0.3">COMPUTING AND</text>
+  <text x="507" y="409" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" letter-spacing="0.3">STORAGE</text>
+
+  <!-- COMPUTER HARDWARE, SOFTWARE, APPLICATIONS (bottom left) -->
+  <rect x="90" y="333" width="220" height="90" rx="4" fill="none" stroke="#e7eaf5" stroke-width="1.5"/>
+  <text x="200" y="362" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" letter-spacing="0.3">COMPUTER HARDWARE,</text>
+  <text x="200" y="381" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" letter-spacing="0.3">SOFTWARE,</text>
+  <text x="200" y="400" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" letter-spacing="0.3">APPLICATIONS</text>
+
+  <!-- DIGITAL INTERFACES (left) -->
+  <rect x="29" y="163" width="185" height="70" rx="4" fill="none" stroke="#e7eaf5" stroke-width="1.5"/>
+  <text x="121" y="192" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" letter-spacing="0.3">DIGITAL</text>
+  <text x="121" y="211" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" letter-spacing="0.3">INTERFACES</text>
+</svg>
