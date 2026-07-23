@@ -381,7 +381,8 @@
   <div class="wrap">
     <h2>Contact Us</h2>
     <p>Please type your message and email address to contact us.</p>
-    <form action="https://formspree.io/f/your-form-id" method="POST">
+    <form action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="66f94e3a-d708-4721-b282-3a317519d004">
       <input type="text" name="name" placeholder="Name" required>
       <input type="email" name="email" placeholder="Email" required>
       <textarea name="message" rows="5" placeholder="Your message" required></textarea>
